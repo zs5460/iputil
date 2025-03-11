@@ -20,6 +20,8 @@ func TestNewIP(t *testing.T) {
 		{"testip", args{"1.1.1.1"}, ip{"1.1.1.1", net.IP{1, 1, 1, 1}, nil, "1.1", "1.1.1", 16843009}, false},
 		{"testerror", args{"1.1.1.1111/24"}, ip{}, true},
 		{"testnull", args{"1.1.1.1111"}, ip{}, true},
+		{"testnull", args{""}, ip{}, true},
+		{"testipv6", args{"::1"}, ip{}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -64,6 +66,7 @@ func Test_step1(t *testing.T) {
 		{"test_step1_4", []string{"1.1.0.0/16", "1.1.1.0/24"}, []string{"1.1.0.0/16"}},
 		{"test_step1_5", []string{"1.1.1.0/24", "1.1.2.0/24"}, []string{"1.1.1.0/24", "1.1.2.0/24"}},
 		{"test_step1_6", []string{"1.1.1.0/24", "1.1.1.0/24"}, []string{"1.1.1.0/24"}},
+		{"test_step1_7", []string{}, []string{}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

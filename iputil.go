@@ -28,17 +28,11 @@ func (i ip) contains(other ip) bool {
 
 // 获取IP的B段
 func (i ip) getClassB() string {
-	if i.ip == nil {
-		return ""
-	}
 	return i.classB
 }
 
 // 获取IP的C段
 func (i ip) getClassC() string {
-	if i.ip == nil {
-		return ""
-	}
 	return i.classC
 }
 

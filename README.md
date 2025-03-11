@@ -1,10 +1,10 @@
-# IPUtil
+# iputil
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/zs5460/iputil)](https://goreportcard.com/report/github.com/zs5460/iputil)
 [![codecov](https://codecov.io/gh/zs5460/iputil/branch/main/graph/badge.svg?token=b7aeunEgyb)](https://codecov.io/gh/zs5460/iputil)
 ![license](https://img.shields.io/github/license/zs5460/iputil)
 
-IPUtil 是一个高效的 IP 地址合并工具，可以将零散的 IP 地址和网段合并成最优的 CIDR 块。
+iputil 是一个高效的 IP 地址合并工具，可以将零散的 IP 地址和网段合并成最优的 CIDR 块。
 
 ## 功能特性
 
