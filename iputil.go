@@ -249,7 +249,6 @@ func Merge(s []string) []string {
 	ips = step2(ips) // 然后是粗略的C段合并
 	ips = step3(ips) // 最后是粗略的B段合并
 	ips = step4(ips) // 最后再处理一次连续网段合并
-	ips = step4(ips) // 最后再处理一次连续网段合并
 	return ips.Output()
 }
 

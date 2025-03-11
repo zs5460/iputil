@@ -314,6 +314,8 @@ func Test_canMerge(t *testing.T) {
 		{"test_canMerge_4", args{"1.1.0.0/23", "1.1.2.0/24"}, false},
 		{"test_canMerge_5", args{"1.1.0.0/24", "1.1.2.0/24"}, false},
 		{"test_canMerge_6", args{"1.1.0.0/24", "1.1.1.1"}, false},
+		{"test_canMerge_7", args{"1.1.2.0/24", "1.1.0.0/24"}, false},
+		{"test_canMerge_6", args{"1.1.0.0/24", "1.1.1"}, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -321,6 +323,66 @@ func Test_canMerge(t *testing.T) {
 			ip2, _ := NewIP(tt.args.b)
 			if got := canMerge(ip1, ip2); got != tt.want {
 				t.Errorf("canMerge() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_ip_contains(t *testing.T) {
+	tests := []struct {
+		name  string
+		i     string
+		other string
+		want  bool
+	}{
+		{"Test_ip_contains_1", "1.1.1.1", "1.1.1.2", false},
+		{"Test_ip_contains_2", "1.1.1.0/24", "1.1.1.2", true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ip1, _ := NewIP(tt.i)
+			ip2, _ := NewIP(tt.other)
+			if got := ip1.contains(ip2); got != tt.want {
+				t.Errorf("ip.contains() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_ipToInt(t *testing.T) {
+	tests := []struct {
+		name string
+		ip   net.IP
+		want uint32
+	}{
+		{"Test_ipToInt_1", nil, 0},
+		{"Test_ipToInt_2", net.IP{}, 0},
+		{"Test_ipToInt_3", net.IP{1, 1, 1, 1}, 16843009},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ipToInt(tt.ip); got != tt.want {
+				t.Errorf("ipToInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMerge(t *testing.T) {
+	tests := []struct {
+		name string
+		args []string
+		want []string
+	}{
+		{"TestMerge_1", nil, nil},
+		{"TestMerge_2", []string{}, []string{}},
+		{"TestMerge_3", []string{"1.1.1.1"}, []string{"1.1.1.1"}},
+		{"TestMerge_4", []string{"1.1.1.0/24", "1.1.1.2"}, []string{"1.1.1.0/24"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Merge(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Merge() = %v, want %v", got, tt.want)
 			}
 		})
 	}
