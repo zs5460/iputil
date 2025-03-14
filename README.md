@@ -21,7 +21,7 @@ package main
 
 import (
     "fmt"
-    "github.com/zs5460/misc/test/iputil"
+    "github.com/zs5460/iputil"
 )
 
 func main() {
